@@ -11,9 +11,14 @@ const props = defineProps({
   <div class="article-item">
     <div class="title">{{ article.title }}</div>
     <div class="bottom">
-      <van-tag class="author" plain type="primary" v-if="article.author">{{ article.author }}</van-tag>
-      <span class="time" v-if="article.niceDate">{{ article.niceDate }}</span>
-      <span class="collect">{{ article.collect ? "已收藏" : "未收藏" }}</span>
+      <van-tag class="tag" color="green" plain type="primary" v-if="article.superChapterName">
+        {{ article.superChapterName }}
+      </van-tag>
+      <van-tag class="tag" color="#25c6fc" plain type="primary" v-if="article.author">
+        {{ article.author }}
+      </van-tag>
+      <span class="date" v-if="article.niceDate">{{ article.niceDate }}</span>
+      <span class="collect"><van-icon color="red" :name="article.collect?'like':'like-o'"/></span>
     </div>
   </div>
 </template>
@@ -31,15 +36,15 @@ const props = defineProps({
     flex-direction: row;
     align-items: center;
 
-    .author {
-      color: #25c6fc;
-      margin-right: 10px;
-    }
-
-    .time {
+    .date {
+      font-size: 12px;
+      color: #bfbfbf;
       margin-right: auto;
     }
   }
+}
 
+.tag {
+  margin-right: 10px;
 }
 </style>

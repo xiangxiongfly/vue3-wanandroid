@@ -1,14 +1,13 @@
 <script setup>
-
 import {apiGetArticles, apiGetBanners} from "@/network/api/home.js";
-import {onMounted, ref} from "vue";
+import {nextTick, onActivated, onDeactivated, onMounted, ref} from "vue";
 import ArticleItem from "@/components/ArticleItem.vue";
 import {showToast} from "vant";
 
 const currentIndex = ref(0);
 const isRefresh = ref(false);
-const isLoadMore = ref(false);
-const isFinished = ref(false);
+const loading = ref(false);
+const finished = ref(false);
 const banners = ref([]);
 const articles = ref([]);
 let page = 0;
@@ -38,7 +37,7 @@ const getBanners = async () => {
 
 const getArticles = async (refresh = true) => {
   if (refresh) {
-    isFinished.value = false;
+    finished.value = false;
     page = 0;
   } else {
     page++;
@@ -51,17 +50,17 @@ const getArticles = async (refresh = true) => {
       isRefresh.value = false;
     } else {
       articles.value.push(...datas);
-      isLoadMore.value = false;
+      loading.value = false;
     }
     if (page === pageCount) {
-      isFinished.value = true;
+      finished.value = true;
     }
   } catch (e) {
     showToast("加载失败");
     if (refresh) {
       isRefresh.value = false;
     } else {
-      isLoadMore.value = false;
+      loading.value = false;
     }
   }
 };
@@ -70,8 +69,8 @@ const getArticles = async (refresh = true) => {
 <template>
   <van-pull-refresh v-model="isRefresh" success-text="刷新成功" @refresh="handleRefresh">
     <van-list
-        v-model:loading="isLoadMore"
-        :finished="isFinished"
+        v-model:loading="loading"
+        :finished="finished"
         finished-text="没有更多了"
         @load="handleLoadMore">
       <!-- 轮播图  -->

@@ -1,5 +1,11 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
     --primary-color: #fe6243;
+}
+
+:root:root {
     --van-nav-bar-title-text-color: #ffffff;
+    --van-nav-bar-text-color: #ffffff;
+    --van-nav-bar-icon-color: #ffffff;
+    --van-nav-bar-background: var(--primary-color);
 }

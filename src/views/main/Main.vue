@@ -30,8 +30,7 @@ const toSearch = () => {
 </script>
 
 <template>
-
-  <van-nav-bar @click-left="openMenu" @click-right="toSearch">
+  <van-nav-bar fixed @click-left="openMenu" @click-right="toSearch">
     <template #left>
       <van-icon name="bars" color="#fff" size="large"></van-icon>
       <span class="nav-title">{{ tabs[currentIndex].title }}</span>
@@ -42,10 +41,13 @@ const toSearch = () => {
   </van-nav-bar>
 
   <div class="content">
-    <component :is="currentComponent"></component>
+    <keep-alive :max="5">
+      <component :is="currentComponent"></component>
+    </keep-alive>
   </div>
 
-  <van-tabbar fixed border safe-area-inset-bottom v-model="currentIndex"
+  <van-tabbar fixed border safe-area-inset-bottom
+              v-model="currentIndex"
               active-color="#fe6243"
               inactive-color="#707070">
     <template v-for="tab in tabs" key=":tab.name">
@@ -69,6 +71,13 @@ const toSearch = () => {
     font-weight: bold;
     margin-top: 3px;
   }
+}
+
+.content {
+  height: 100vh;
+  overflow-y: auto;
+  padding-top: 46px;
+  padding-bottom: 50px;
 }
 
 .van-popup {

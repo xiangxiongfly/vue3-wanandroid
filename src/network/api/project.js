@@ -8,6 +8,6 @@ export function apiGetProjectTabs() {
 
 export function apiGetProjectList(page, id) {
     return request.get({
-        url: `/project/list/${page}/json?cid=${id}}`,
+        url: `project/list/${page}/json?cid=${id}`
     })
 }

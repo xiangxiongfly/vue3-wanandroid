@@ -47,13 +47,6 @@ const handleRegister = () => {
 </template>
 
 <style scoped lang="scss">
-.van-nav-bar {
-  --van-nav-bar-title-text-color: #ffffff;
-  --van-nav-bar-text-color: #ffffff;
-  --van-nav-bar-icon-color: #ffffff;
-  background-color: var(--primary-color);
-}
-
 .form {
   margin-top: 50px;
   padding: 20px;
