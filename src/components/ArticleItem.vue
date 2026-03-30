@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div class="article-item">
-    <div class="title">{{ article.title }}</div>
+    <div class="title" v-html="article.title"></div>
     <div class="bottom">
       <van-tag class="tag" color="green" plain type="primary" v-if="article.superChapterName">
         {{ article.superChapterName }}

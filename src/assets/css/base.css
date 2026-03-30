@@ -9,3 +9,9 @@
     --van-nav-bar-icon-color: #ffffff;
     --van-nav-bar-background: var(--primary-color);
 }
+
+.line {
+    margin: 20px 0;
+    height: 6px;
+    background: #f4f4f4;
+}

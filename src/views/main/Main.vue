@@ -6,7 +6,9 @@ import Nav from "@/views/main/nav/Nav.vue";
 import Project from "@/views/main/project/Project.vue";
 import Tree from "@/views/main/tree/Tree.vue";
 import {computed, ref} from "vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const tabs = [
   {title: "首页", icon: "wap-home"},
   {title: "项目", icon: "label"},
@@ -25,7 +27,7 @@ const openMenu = () => {
 };
 
 const toSearch = () => {
-
+  router.push("/search");
 };
 </script>
 
