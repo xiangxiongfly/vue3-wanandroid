@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import {apiGetTreeList} from "@/network/api/tree.js";
 import {useRouter} from "vue-router";
 
@@ -26,6 +26,10 @@ const toTreeDetail = (item) => {
     }
   })
 }
+
+onUnmounted(() => {
+  console.log("Tree unmounted");
+});
 </script>
 
 <template>

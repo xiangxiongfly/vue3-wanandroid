@@ -1,6 +1,6 @@
 <script setup>
 import {apiGetArticles, apiGetBanners} from "@/network/api/home.js";
-import {nextTick, onActivated, onDeactivated, onMounted, ref} from "vue";
+import {nextTick, onActivated, onDeactivated, onMounted, onUnmounted, ref} from "vue";
 import ArticleItem from "@/components/ArticleItem.vue";
 import {showToast} from "vant";
 
@@ -64,6 +64,10 @@ const getArticles = async (refresh = true) => {
     }
   }
 };
+
+onUnmounted(()=>{
+  console.log('Home unmounted');
+})
 </script>
 
 <template>
@@ -71,6 +75,7 @@ const getArticles = async (refresh = true) => {
     <van-list
         v-model:loading="loading"
         :finished="finished"
+        error-text="请求失败，点击重新加载"
         finished-text="没有更多了"
         @load="handleLoadMore">
       <!-- 轮播图  -->

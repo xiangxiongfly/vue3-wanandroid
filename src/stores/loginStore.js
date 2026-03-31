@@ -2,11 +2,15 @@ import {KEY_KEYWORDS_LIST, KEY_USER_INFO} from "@/global/constants.js";
 import {apiLogin} from "@/network/api/login.js";
 import {localCache} from "@/utils/cache.js";
 import {defineStore} from "pinia";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 
 export const useLoginStore = defineStore("loginStore", () => {
     const userInfo = ref(null);
-    const keywordsList = ref([])
+    const keywordsList = ref([]);
+
+    const isLogin = computed(() => {
+        return userInfo.value !== null;
+    });
 
     const actionLogin = async (username, password) => {
         const {data} = await apiLogin(username, password);
@@ -27,25 +31,26 @@ export const useLoginStore = defineStore("loginStore", () => {
     };
 
     watch(keywordsList, (newVal, oldVal) => {
-        console.log("数据发生变化了", keywordsList.value)
+        console.log("数据发生变化了", keywordsList.value);
         localCache.setCache(KEY_KEYWORDS_LIST, keywordsList.value);
     }, {deep: true});
 
     const initKeywordsList = () => {
-        keywordsList.value = localCache.getCache(KEY_KEYWORDS_LIST) ?? []
-    }
+        keywordsList.value = localCache.getCache(KEY_KEYWORDS_LIST) ?? [];
+    };
 
     const addKeywords = (keywords) => {
         if (!keywordsList.value.includes(keywords)) {
             keywordsList.value.unshift(keywords);
         }
-    }
+    };
 
     const clearKeywords = () => {
-        keywordsList.value = []
-    }
+        keywordsList.value = [];
+    };
 
     return {
+        isLogin,
         userInfo,
         actionLogin,
         actionLogout,

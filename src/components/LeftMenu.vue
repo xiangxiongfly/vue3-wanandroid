@@ -3,6 +3,7 @@ import {KEY_USER_INFO} from "@/global/constants.js";
 import {useLoginStore} from "@/stores/loginStore.js";
 import {localCache} from "@/utils/cache.js";
 import {storeToRefs} from "pinia";
+import {showToast} from "vant";
 import {ref} from "vue";
 import DefLogo from "@/assets/img/wanandroid_logo.png";
 import {useRouter} from "vue-router";
@@ -14,15 +15,13 @@ const loginStore = useLoginStore();
 const {userInfo} = storeToRefs(loginStore);
 
 const toLogin = () => {
-  if (!userInfo.value) {
+  if (!loginStore.isLogin) {
     router.push("/login");
   }
 };
-const toCollection = () => {
 
-};
 const handleLogout = () => {
-  if (userInfo.value) {
+  if (loginStore.isLogin) {
     showDialog({
       title: "提示",
       message: "是否退出登录?",
@@ -36,6 +35,14 @@ const handleLogout = () => {
     }).catch(() => {
       console.log("取消");
     });
+  }
+};
+
+const toCollection = () => {
+  if (loginStore.isLogin) {
+    router.push("/collection");
+  } else {
+    showToast("请先登录");
   }
 };
 </script>

@@ -5,7 +5,7 @@ import Home from "@/views/main/home/Home.vue";
 import Nav from "@/views/main/nav/Nav.vue";
 import Project from "@/views/main/project/Project.vue";
 import Tree from "@/views/main/tree/Tree.vue";
-import {computed, ref} from "vue";
+import {computed, onUnmounted, ref} from "vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
@@ -29,6 +29,10 @@ const openMenu = () => {
 const toSearch = () => {
   router.push("/search");
 };
+
+onUnmounted(() => {
+  console.log("Main unmounted");
+});
 </script>
 
 <template>
@@ -43,7 +47,7 @@ const toSearch = () => {
   </van-nav-bar>
 
   <div class="content">
-    <keep-alive :max="5">
+    <keep-alive>
       <component :is="currentComponent"></component>
     </keep-alive>
   </div>

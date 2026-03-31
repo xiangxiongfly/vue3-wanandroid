@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, onUnmounted, ref} from "vue";
 import {apiGetNavList} from "@/network/api/nav.js";
 
 const contentRef = ref()
@@ -18,6 +18,10 @@ const getNavList = async () => {
 const handleChange = (value) => {
   contentRef.value.scrollTop = 0
 }
+
+onUnmounted(()=>{
+  console.log('Nav unmounted');
+})
 </script>
 
 <template>

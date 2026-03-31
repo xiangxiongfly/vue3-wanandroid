@@ -35,7 +35,7 @@ const handleRegister = () => {
 </script>
 
 <template>
-  <van-nav-bar title="登录" left-text="返回" left-arrow @click-left="$router.back()"/>
+  <van-nav-bar title="登录" fixed left-text="返回" left-arrow @click-left="$router.back()"/>
   <van-form @submit="handleLogin" class="form">
     <van-field name="用户名" label="用户名：" placeholder="请输入用户名" v-model="loginModel.username"
                :rules="loginRules.username"/>

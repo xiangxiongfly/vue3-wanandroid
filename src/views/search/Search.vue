@@ -5,72 +5,73 @@ import {apiGetHotkeys, apiQueryList} from "@/network/api/search.js";
 import ArticleItem from "@/components/ArticleItem.vue";
 
 const loginStore = useLoginStore();
-const keywords = ref("")
-const hotkeys = ref([])
-let page = 0
-const items = ref([])
-const loading = ref(false)
-const error = ref(false)
+const keywords = ref("");
+const hotkeys = ref([]);
+let page = 0;
+const items = ref([]);
+const loading = ref(false);
+const error = ref(false);
 const finished = ref(false);
-const currentKeywords = ref("")
+const currentKeywords = ref("");
 
-loginStore.initKeywordsList()
+loginStore.initKeywordsList();
 
 const onSearch = (val) => {
   currentKeywords.value = val;
-  loginStore.addKeywords(val)
-  page = 0
-  items.value = []
-  getQueryList()
-}
+  loginStore.addKeywords(val);
+  page = 0;
+  items.value = [];
+  getQueryList();
+};
 
 const onCancel = () => {
   currentKeywords.value = "";
-  items.value = []
-}
+  items.value = [];
+};
 
-const clickTag = (keywords) => {
-  currentKeywords.value = keywords;
-  loginStore.addKeywords(keywords)
-  page = 0
-  items.value = []
-  getQueryList()
-}
+const clickTag = (val) => {
+  currentKeywords.value = val;
+  loginStore.addKeywords(val);
+  keywords.value = val;
+  page = 0;
+  items.value = [];
+  getQueryList();
+};
 
 const clearRecords = () => {
-  loginStore.clearKeywords()
-}
+  loginStore.clearKeywords();
+};
 
 onMounted(() => {
-  getHotkeys()
-})
+  getHotkeys();
+});
 
 const getHotkeys = async () => {
-  const {data} = await apiGetHotkeys()
-  hotkeys.value = data
-}
+  const {data} = await apiGetHotkeys();
+  hotkeys.value = data;
+};
 
 const getQueryList = async () => {
   try {
-    const {data} = await apiQueryList(page, currentKeywords.value)
-    const {datas, curPage, pageCount} = data
-    items.value.push(...datas)
-    loading.value = false
+    const {data} = await apiQueryList(page, currentKeywords.value);
+    const {datas, curPage, pageCount} = data;
+    items.value.push(...datas);
+    loading.value = false;
     if (curPage === pageCount) {
-      finished.value = true
+      finished.value = true;
     } else {
-      page++
+      page++;
     }
   } catch (err) {
-    loading.value = false
-    error.value = true
+    loading.value = false;
+    error.value = true;
   }
-}
+};
 </script>
 
 <template>
   <div class="search">
-    <van-nav-bar title="搜索" left-text="返回" left-arrow @click-left="$router.back()"/>
+    <van-nav-bar title="搜索" fixed left-text="返回" left-arrow @click-left="$router.back()"/>
     <van-search
         v-model="keywords"
         show-action

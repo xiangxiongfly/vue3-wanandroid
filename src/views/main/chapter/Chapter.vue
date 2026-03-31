@@ -1,35 +1,39 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import {apiGetChapterList} from "@/network/api/chapter.js";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
-const chapterList = ref([])
+const chapterList = ref([]);
 
 onMounted(() => {
-  getChapterList()
-})
+  getChapterList();
+});
 
 const getChapterList = async () => {
-  const {data} = await apiGetChapterList()
-  chapterList.value = data
-}
+  const {data} = await apiGetChapterList();
+  chapterList.value = data;
+};
 
 function getRandomColor() {
-  const str = "0123456789abcdef"
-  let color = "#"
+  const str = "0123456789abcdef";
+  let color = "#";
   for (let i = 0; i < 6; i++) {
-    color += str[Math.floor(Math.random() * 16)]
+    color += str[Math.floor(Math.random() * 16)];
   }
-  return color
+  return color;
 }
 
 const toChapterDetail = (name, id) => {
   router.push({
     path: "/chapterdetail",
     query: {name, id},
-  })
-}
+  });
+};
+
+onUnmounted(() => {
+  console.log("Chapter unmounted");
+});
 </script>
 
 <template>

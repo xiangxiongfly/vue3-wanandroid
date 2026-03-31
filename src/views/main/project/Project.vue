@@ -3,48 +3,52 @@ import {onMounted, onUnmounted, ref} from "vue";
 import {apiGetProjectList, apiGetProjectTabs} from "@/network/api/project.js";
 import {showToast} from "vant";
 
-const tabs = ref([])
-const active = ref(0)
-const finisheds = ref([])
-const errors = ref([])
-const loadings = ref([])
-const pages = ref([])
-const projectLists = ref([])
+const tabs = ref([]);
+const active = ref(0);
+const finisheds = ref([]);
+const errors = ref([]);
+const loadings = ref([]);
+const pages = ref([]);
+const projectLists = ref([]);
 
 onMounted(async () => {
-  const {data} = await apiGetProjectTabs()
-  tabs.value = data.map(item => ({name: item.name, id: item.id}))
+  const {data} = await apiGetProjectTabs();
+  tabs.value = data.map(item => ({name: item.name, id: item.id}));
   for (let i = 0; i <= tabs.value.length; i++) {
-    finisheds.value[i] = false
-    errors.value[i] = false
-    loadings.value[i] = false
-    pages.value[i] = 1
-    projectLists.value[i] = []
+    finisheds.value[i] = false;
+    errors.value[i] = false;
+    loadings.value[i] = false;
+    pages.value[i] = 1;
+    projectLists.value[i] = [];
   }
-})
+});
 
 onUnmounted(async () => {
   console.log("project onUnmounted");
-})
+});
 
 const getProjectList = async () => {
-  const page = pages.value[active.value]
-  const id = tabs.value[active.value].id
+  const page = pages.value[active.value];
+  const id = tabs.value[active.value].id;
   try {
-    const {data} = await apiGetProjectList(page, id)
-    const {datas, curPage, pageCount} = data
-    loadings.value[active.value] = false
-    projectLists.value[active.value].push(...datas)
+    const {data} = await apiGetProjectList(page, id);
+    const {datas, curPage, pageCount} = data;
+    loadings.value[active.value] = false;
+    projectLists.value[active.value].push(...datas);
     if (curPage === pageCount) {
-      finisheds.value[active.value] = true
+      finisheds.value[active.value] = true;
     }
-    pages.value[active.value] += 1
+    pages.value[active.value] += 1;
   } catch (error) {
-    showToast("请求失败")
-    loadings.value[active.value] = false
-    errors.value[active.value] = true
+    showToast("请求失败");
+    loadings.value[active.value] = false;
+    errors.value[active.value] = true;
   }
-}
+};
+
+onUnmounted(() => {
+  console.log("Project unmounted");
+});
 </script>
 
 <template>
@@ -68,7 +72,6 @@ const getProjectList = async () => {
       </van-list>
     </van-tab>
   </van-tabs>
-
 </template>
 
 <style scoped lang="scss">
