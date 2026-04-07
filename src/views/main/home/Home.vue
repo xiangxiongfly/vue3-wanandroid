@@ -1,12 +1,15 @@
 <script setup>
-import {apiGetArticles, apiGetBanners} from "@/network/api/home.js";
-import {nextTick, onActivated, onDeactivated, onMounted, onUnmounted, ref} from "vue";
 import ArticleItem from "@/components/ArticleItem.vue";
+import {apiGetArticles, apiGetBanners} from "@/network/api/home.js";
 import {showToast} from "vant";
+import {onMounted, onUnmounted, ref} from "vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const currentIndex = ref(0);
 const isRefresh = ref(false);
 const loading = ref(false);
+const error = ref(false);
 const finished = ref(false);
 const banners = ref([]);
 const articles = ref([]);
@@ -65,22 +68,34 @@ const getArticles = async (refresh = true) => {
   }
 };
 
-onUnmounted(()=>{
-  console.log('Home unmounted');
-})
+const clickBanner = (item, index) => {
+  const {title, url} = item;
+  router.push({
+    path: "/webview",
+    query: {
+      title,
+      url
+    }
+  });
+};
+
+onUnmounted(() => {
+  console.log("Home unmounted");
+});
 </script>
 
 <template>
   <van-pull-refresh v-model="isRefresh" success-text="刷新成功" @refresh="handleRefresh">
     <van-list
         v-model:loading="loading"
+        v-model:error="error"
         :finished="finished"
         error-text="请求失败，点击重新加载"
         finished-text="没有更多了"
         @load="handleLoadMore">
       <!-- 轮播图  -->
       <van-swipe @change="handleSwipeChange" v-if="banners.length>0">
-        <van-swipe-item v-for="(item,index) in banners" :key="item.id">
+        <van-swipe-item v-for="(item,index) in banners" :key="item.id" @click="clickBanner(item,index)">
           <van-image fit="fill" :src="item.imagePath"/>
         </van-swipe-item>
         <template #indicator>

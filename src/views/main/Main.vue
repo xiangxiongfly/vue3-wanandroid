@@ -5,7 +5,7 @@ import Home from "@/views/main/home/Home.vue";
 import Nav from "@/views/main/nav/Nav.vue";
 import Project from "@/views/main/project/Project.vue";
 import Tree from "@/views/main/tree/Tree.vue";
-import {computed, onUnmounted, ref} from "vue";
+import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
@@ -19,6 +19,8 @@ const tabs = [
 const components = [Home, Project, Tree, Nav, Chapter];
 const currentIndex = ref(0);
 const currentComponent = computed(() => components[currentIndex.value]);
+const contentRef = ref(null);
+const scrollPositions = ref(new Array(components.length).fill(0));
 
 const showMenu = ref(false);
 
@@ -29,6 +31,35 @@ const openMenu = () => {
 const toSearch = () => {
   router.push("/search");
 };
+
+// 保存指定页面的滚动位置
+const saveScrollPosition = (index) => {
+  if (contentRef.value) {
+    scrollPositions.value[index] = contentRef.value.scrollTop;
+  }
+};
+
+// 恢复指定页面的滚动位置
+const restoreScrollPosition = (index) => {
+  if (contentRef.value) {
+    contentRef.value.scrollTop = scrollPositions.value[index];
+  }
+};
+
+// 监听页面切换
+watch(currentIndex, (newIndex, oldIndex) => {
+  // 保存旧页面的滚动位置
+  saveScrollPosition(oldIndex);
+  // 恢复新页面的滚动位置
+  setTimeout(() => {
+    restoreScrollPosition(newIndex);
+  }, 0);
+});
+
+onMounted(() => {
+  // 初始化时恢复当前页面的滚动位置
+  restoreScrollPosition(currentIndex.value);
+});
 
 onUnmounted(() => {
   console.log("Main unmounted");
@@ -46,7 +77,7 @@ onUnmounted(() => {
     </template>
   </van-nav-bar>
 
-  <div class="content">
+  <div class="content" ref="contentRef">
     <keep-alive>
       <component :is="currentComponent"></component>
     </keep-alive>

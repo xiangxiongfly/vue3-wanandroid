@@ -4,19 +4,19 @@ import {apiGetTreeList} from "@/network/api/tree.js";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
-const treeList = ref([])
+const treeList = ref([]);
 
 const getTreeList = async () => {
   try {
-    const {data} = await apiGetTreeList()
-    treeList.value = data
+    const {data} = await apiGetTreeList();
+    treeList.value = data;
   } catch (error) {
   }
-}
+};
 
 onMounted(() => {
-  getTreeList()
-})
+  getTreeList();
+});
 
 const toTreeDetail = (item) => {
   router.push({
@@ -24,8 +24,8 @@ const toTreeDetail = (item) => {
     query: {
       data: JSON.stringify({name: item.name, children: item.children})
     }
-  })
-}
+  });
+};
 
 onUnmounted(() => {
   console.log("Tree unmounted");

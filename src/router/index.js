@@ -35,16 +35,7 @@ const router = createRouter({
             path: "/webview",
             component: () => import("@/views/webview/WebView.vue"),
         }
-    ],
-    // 滚动行为
-    scrollBehavior(to, from, savedPosition) {
-        console.log("scrollBehavior: ", to, from, savedPosition);
-        if (savedPosition) {
-            return savedPosition;
-        }
-        // 始终回到顶部
-        return {top: 0, left: 0};
-    }
+    ]
 });
 
 export default router;

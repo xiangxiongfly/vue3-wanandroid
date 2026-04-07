@@ -2,10 +2,9 @@
 </script>
 
 <template>
-  <router-view v-slot="props">
-    {{ console.log("props内容：", props) }}
-    <keep-alive>
-      <component :is="props.Component"></component>
+  <router-view v-slot="{Component}">
+    <keep-alive include="Main">
+      <component :is="Component"></component>
     </keep-alive>
   </router-view>
 </template>

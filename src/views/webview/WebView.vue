@@ -1,13 +1,14 @@
 <script setup>
-
 import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 
 const webviewTitle = ref("");
 const webviewUrl = ref("");
 
 const route = useRoute();
 const {title, url} = route.query;
+console.log("title", title);
+console.log("url", url);
 webviewTitle.value = title;
 webviewUrl.value = url;
 </script>

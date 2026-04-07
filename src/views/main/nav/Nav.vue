@@ -2,26 +2,26 @@
 import {computed, onMounted, onUnmounted, ref} from "vue";
 import {apiGetNavList} from "@/network/api/nav.js";
 
-const contentRef = ref()
-const active = ref(0)
-const items = ref([])
+const contentRef = ref();
+const active = ref(0);
+const items = ref([]);
 
 onMounted(() => {
-  getNavList()
-})
+  getNavList();
+});
 
 const getNavList = async () => {
-  const {data} = await apiGetNavList()
-  items.value = data
-}
+  const {data} = await apiGetNavList();
+  items.value = data;
+};
 
 const handleChange = (value) => {
-  contentRef.value.scrollTop = 0
-}
+  contentRef.value.scrollTop = 0;
+};
 
-onUnmounted(()=>{
-  console.log('Nav unmounted');
-})
+onUnmounted(() => {
+  console.log("Nav unmounted");
+});
 </script>
 
 <template>
@@ -44,6 +44,7 @@ onUnmounted(()=>{
 
 <style scoped lang="scss">
 .nav {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
