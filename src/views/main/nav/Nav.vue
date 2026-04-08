@@ -1,7 +1,9 @@
 <script setup>
-import {computed, onMounted, onUnmounted, ref} from "vue";
 import {apiGetNavList} from "@/network/api/nav.js";
+import {onMounted, onUnmounted, ref} from "vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const contentRef = ref();
 const active = ref(0);
 const items = ref([]);
@@ -19,6 +21,17 @@ const handleChange = (value) => {
   contentRef.value.scrollTop = 0;
 };
 
+const clickItem = (item) => {
+  const {title, link} = item;
+  router.push({
+    path: "/webview",
+    query: {
+      title,
+      url: link
+    }
+  });
+};
+
 onUnmounted(() => {
   console.log("Nav unmounted");
 });
@@ -33,7 +46,7 @@ onUnmounted(() => {
       <van-space wrap>
         <template v-if="items[active]">
           <van-tag v-for="item in items[active].articles" :key="item.id" plain round type="primary" size="large"
-                   style="padding: 10px 15px;">
+                   style="padding: 10px 15px;" @click="clickItem(item)">
             {{ item.title }}
           </van-tag>
         </template>

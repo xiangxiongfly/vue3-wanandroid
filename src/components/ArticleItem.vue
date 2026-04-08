@@ -96,11 +96,12 @@ const handleUncollectWithCollection = async (article) => {
 };
 
 const toArticleDetails = () => {
+  const {title, link} = props.article;
   router.push({
     path: "/webview",
     query: {
-      title: "文章详情",
-      url: props.article.link
+      title,
+      url: link
     }
   });
 };

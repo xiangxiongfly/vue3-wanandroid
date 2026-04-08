@@ -2,6 +2,7 @@
 import {onMounted, onUnmounted, ref} from "vue";
 import {apiGetProjectList, apiGetProjectTabs} from "@/network/api/project.js";
 import {showToast} from "vant";
+import {useRouter} from "vue-router";
 
 const tabs = ref([]);
 const active = ref(0);
@@ -11,6 +12,7 @@ const loadings = ref([]);
 const pages = ref([]);
 const projectLists = ref([]);
 
+const router = useRouter();
 onMounted(async () => {
   const {data} = await apiGetProjectTabs();
   tabs.value = data.map(item => ({name: item.name, id: item.id}));
@@ -46,6 +48,17 @@ const getProjectList = async () => {
   }
 };
 
+const clickItem = (item) => {
+  const {title, link} = item;
+  router.push({
+    path: "/webview",
+    query: {
+      title,
+      url: link
+    }
+  });
+};
+
 onUnmounted(() => {
   console.log("Project unmounted");
 });
@@ -58,7 +71,7 @@ onUnmounted(() => {
                 error-text="请求失败，点击重新加载"
                 finished-text="没有更多了"
                 @load="getProjectList">
-        <div v-for="item in projectLists[active]" :key="item.id" class="item">
+        <div v-for="item in projectLists[active]" :key="item.id" class="item" @click="clickItem(item)">
           <van-image class="img" width="70" lazy-load :src="item.envelopePic"/>
           <div class="content">
             <div class="van-multi-ellipsis--l2 title">{{ item.title }}</div>
