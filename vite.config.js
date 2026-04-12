@@ -24,7 +24,7 @@ export default defineConfig({
             // 处理“/path”前缀的路径
             "/api": {
                 // 替换目标接口
-                target: "https://www.wanandroid.com",
+                target: "https://wanandroid.com",
                 // 表示开启代理，允许跨域
                 changeOrigin: true,
                 // 重写路径，删除"/path"
