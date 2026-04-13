@@ -6,34 +6,34 @@ import {apiGetChapterDetail} from "@/network/api/chapter.js";
 import ArticleItem from "@/components/ArticleItem.vue";
 
 const router = useRouter();
-const route = useRoute()
-const {name, id} = route.query
+const route = useRoute();
+const {name, id} = route.query;
 const loading = ref(false);
-const error = ref(false)
+const error = ref(false);
 const finished = ref(false);
-const page = ref(0)
-const detailList = ref([])
+const page = ref(0);
+const detailList = ref([]);
 
 const onClickLeft = () => {
-  router.back()
-}
+  router.back();
+};
 
 const getDetailList = async () => {
   try {
-    const {data} = await apiGetChapterDetail(id, page.value)
-    const {datas, curPage, pageCount} = data
-    detailList.value.push(...datas)
-    loading.value = false
+    const {data} = await apiGetChapterDetail(id, page.value);
+    const {datas, curPage, pageCount} = data;
+    detailList.value.push(...datas);
+    loading.value = false;
     if (curPage === pageCount) {
-      finished.value = true
+      finished.value = true;
     } else {
-      page.value++
+      page.value++;
     }
   } catch (error) {
-    loading.value = false
-    error.value = true
+    loading.value = false;
+    error.value = true;
   }
-}
+};
 </script>
 
 <template>
@@ -45,6 +45,7 @@ const getDetailList = async () => {
         left-arrow
         @click-left="onClickLeft"/>
     <van-list
+        v-model:error="error"
         v-model:loading="loading"
         :finished="finished"
         error-text="请求失败，点击重新加载"

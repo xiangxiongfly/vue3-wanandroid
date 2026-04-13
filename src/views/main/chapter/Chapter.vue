@@ -52,6 +52,7 @@ onUnmounted(() => {
   flex-wrap: wrap;
 
   .item {
+    color: #ffffff;
     width: 50%;
     height: 120px;
     line-height: 120px;

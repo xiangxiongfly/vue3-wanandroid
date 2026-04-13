@@ -111,8 +111,8 @@ const toArticleDetails = () => {
   <div class="article-item" @click.stop="toArticleDetails">
     <div class="title" v-html="article.title"></div>
     <div class="bottom">
-      <van-tag class="tag" color="green" plain type="primary" v-if="article.superChapterName">
-        {{ article.superChapterName }}
+      <van-tag class="tag" color="green" plain type="primary" v-if="article.chapterName">
+        {{ article.chapterName }}
       </van-tag>
       <van-tag class="tag" color="#25c6fc" plain type="primary" v-if="article.author">
         {{ article.author }}
