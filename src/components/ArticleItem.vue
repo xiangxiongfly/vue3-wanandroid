@@ -3,7 +3,6 @@ import {apiCollectArticle, apiUncollectArticle, apiUncolletWithCollection} from 
 import router from "@/router/index.js";
 import {useLoginStore} from "@/stores/loginStore.js";
 import {showToast} from "vant";
-import {ref} from "vue";
 
 const props = defineProps({
   type: {
@@ -112,7 +111,7 @@ const toArticleDetails = () => {
     <div class="title" v-html="article.title"></div>
     <div class="bottom">
       <van-tag class="tag" color="green" plain type="primary" v-if="article.chapterName">
-        {{ article.chapterName }}
+        {{ article.superChapterName ? article.superChapterName + "•" + article.chapterName : article.chapterName }}
       </van-tag>
       <van-tag class="tag" color="#25c6fc" plain type="primary" v-if="article.author">
         {{ article.author }}

@@ -1,5 +1,6 @@
 import request from "@/network/request.js";
 
+// 收藏文章
 export function apiCollectArticle(id) {
     return request.post({url: `/lg/collect/${id}/json`});
 }
@@ -9,6 +10,7 @@ export function apiUncollectArticle(id) {
     return request.post({url: `/lg/uncollect_originId/${id}/json`});
 }
 
+// 获取已收藏文章列表
 export function apiGetCollectionList(page) {
     return request.get({url: `/lg/collect/list/${page}/json`});
 }
