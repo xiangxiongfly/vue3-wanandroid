@@ -20,7 +20,9 @@ export const useLoginStore = defineStore("loginStore", () => {
 
     const actionLogout = () => {
         userInfo.value = null;
+        keywordsList.value = null;
         localCache.removeCache(KEY_USER_INFO);
+        localCache.removeCache(KEY_KEYWORDS_LIST);
     };
 
     const loadUserInfo = () => {

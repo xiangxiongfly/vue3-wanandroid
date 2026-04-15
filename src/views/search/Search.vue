@@ -70,8 +70,8 @@ const getQueryList = async () => {
 </script>
 
 <template>
+  <van-nav-bar fixed title="搜索" left-text="返回" left-arrow @click-left="$router.back()"/>
   <div class="search">
-    <van-nav-bar title="搜索" fixed left-text="返回" left-arrow @click-left="$router.back()"/>
     <van-search
         v-model="keywords"
         show-action
@@ -122,23 +122,27 @@ const getQueryList = async () => {
 </template>
 
 <style scoped lang="scss">
-.container {
-  padding: 10px;
+.search {
+  padding-top: 46px;
 
-  .title {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
+  .container {
+    padding: 10px;
 
-  .search-records {
-    display: flex;
-    flex-direction: column;
-  }
+    .title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
 
-  .hot-search {
-    display: flex;
-    flex-direction: column;
+    .search-records {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hot-search {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>
