@@ -6,6 +6,8 @@
 - UI组件库：Vant4
 - 适配：postcss
 
+线上地址：121.199.72.133
+
 <img src="https://raw.githubusercontent.com/xiangxiongfly/vue3-wanandroid/refs/heads/main/img/a.png" style="zoom:25%;" />
 
 <img src="https://raw.githubusercontent.com/xiangxiongfly/vue3-wanandroid/refs/heads/main/img/b.png" style="zoom:25%;" />
